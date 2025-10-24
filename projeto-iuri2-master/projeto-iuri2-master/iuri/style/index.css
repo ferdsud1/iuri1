@@ -1,12 +1,14 @@
 /* =============================== */
-/* ESTILOS GERAIS                 */
+/* ESTILOS GERAIS - CORRIGIDO */
 /* =============================== */
 
 * {
   text-decoration: none;
   color: #030202;
   font-weight: 400;
-  font-size: 1.2vw;
+  /* CORREÇÃO CRUCIAL: Mudar de vw para uma unidade mais estável, como rem ou px, para a fonte base. */
+  /* O uso de 1.2vw na fonte base causava tamanhos minúsculos ou gigantes. */
+  font-size: 16px; /* Ajuste inicial para uma fonte base padrão de 16px */
 }
 
 body {
@@ -49,6 +51,8 @@ body {
   font-family: 'Arsenal', sans-serif; 
   font-weight: 700;
   transition: background-color 0.3s, color 0.3s;
+  /* Corrigindo a fonte do menu para usar unidades estáveis: */
+  font-size: 1.1rem;
 }
 
 .menu ul li a:hover,
@@ -78,6 +82,7 @@ body {
 }
 
 .overlay h1 {
+  /* Mantido vw, mas agora o uso de font-size: 16px na base ajuda a estabilizar */
   font-size: 5vw;
   color: #fff;
   text-shadow: 5px 5px 5px rgb(0, 0, 0);
@@ -86,6 +91,7 @@ body {
 .overlay p {
   font-family: 'geneva', sans-serif;
   font-weight: 800;
+  /* Mantido px, mas será ajustado nas Media Queries para celular */
   font-size: 32px;
   color: #73e6e0;
 }
@@ -118,10 +124,13 @@ body {
   background: #fff;
   border-radius: 15px;
   padding: 25px;
-  width: 350px;
+  /* CORREÇÃO: Usar max-width e width flexível para celular */
+  width: 100%; /* Default para telas pequenas */
+  max-width: 350px; /* Limite para telas grandes */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: #000;
+  margin-bottom: 20px; /* Adiciona margem entre os planos no modo empilhado */
 }
 
 .plano:hover {
@@ -180,14 +189,18 @@ body {
 /* =============================== */
 
 .biografia-container {
+  /* Aumentando o max-width para melhor visualização */
   display: flex;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
   background-color: #ffffff;
+  /* Adicionado padding para evitar que o conteúdo toque as bordas em telas grandes */
+  padding: 20px;
 }
 
 .perfil-imagem-registro {
-  flex: 0 0 40%;
+  /* Flex-basis maior para a imagem */
+  flex: 0 0 45%; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,14 +209,14 @@ body {
 
 .perfil-foto-iuri {
   width: 100%;
-  max-width: 450px;
+  /* Removido max-width fixo para melhor adaptação */
   height: auto;
   display: block;
   object-fit: cover;
 }
 
 .registro-cref {
-  font-size: 12px;
+  font-size: 14px; /* Aumentado um pouco para celular */
   color: #666;
   text-align: left;
   margin-top: 10px;
@@ -270,6 +283,7 @@ body {
 .botao-whatsapp-iuri:hover {
   background-color: #1DA851;
 }
+
 .video-biografia {
     text-align: center;
     margin: 50px 0; /* Espaço acima e abaixo */
@@ -287,24 +301,6 @@ body {
     height: auto;
     border-radius: 10px; /* Borda arredondada opcional */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra opcional */
-}
-
-@media (max-width: 768px) {
-  .biografia-container {
-    flex-direction: column;
-  }
-  .perfil-imagem-registro {
-    width: 100%;
-    padding: 20px;
-    order: -1;
-  }
-  .perfil-texto-iuri {
-    padding: 20px;
-  }
-  .registro-cref {
-    text-align: center;
-    padding-left: 0;
-  }
 }
 
 /* =============================== */
@@ -325,11 +321,13 @@ body {
   text-align: left;
   max-width: 1200px;
   margin: 0 auto 40px;
+  color: #fff; /* Adicionando cor branca para visibilidade no fundo azul */
 }
 
 .depoimentos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+  /* Corrigido para garantir que o min-width seja menor no celular */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
   gap: 25px;
   max-width: 1200px;
   margin: 0 auto;
@@ -471,79 +469,144 @@ footer {
 }
 
 /* =============================== */
-/* MEDIA QUERIES GERAIS           */
+/* MEDIA QUERIES OTIMIZADAS       */
 /* =============================== */
 
-/* Celulares pequenos */
-@media (max-width: 425px) {
+/* Tablets e Celulares Maiores (768px e abaixo) */
+@media (max-width: 768px) {
+  /* Menu */
   .menu {
     flex-direction: column;
+    padding: 10px 20px;
   }
 
   .menu img {
-    height: 90px;
+    height: 80px;
   }
 
   .menu ul {
-    flex-direction: column;
-    gap: 8px;
+    flex-wrap: wrap; /* Permite que o menu quebre em duas linhas se necessário */
+    justify-content: center;
+    padding: 0;
+    margin-top: 10px;
   }
 
+  .menu ul li a {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+  
+  /* OVERLAY da Seção Principal */
   .overlay h1 {
-    font-size: 8vw;
+    font-size: 8vw; /* Fonte maior para celular */
   }
 
   .overlay p {
-    font-size: 20px;
+    font-size: 18px; /* Reduzindo o tamanho da tagline */
   }
 
-  .plano {
-    width: 100%;
-  }
-
-  .redes-sociais a {
-    width: 32px;
-    height: 32px;
-  }
-
-  .redes-sociais i,
-  .redes-sociais img {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* Tablets */
-@media  (max-width: 768px) {
-  .menu {
+  /* BIOGRAFIA */
+  .biografia-container {
     flex-direction: column;
+    padding: 20px; /* Adiciona padding geral */
   }
 
-  .menu img {
-    height: 110px;
+  .perfil-imagem-registro {
+    /* Ajustado para centralizar a imagem no topo */
+    flex: 1;
+    width: 80%; 
+    max-width: 300px;
+    margin: 0 auto 20px;
+    padding-right: 0;
+  }
+
+  .perfil-foto-iuri {
+    border-radius: 8px; /* Estética opcional */
+  }
+
+  .registro-cref {
+    text-align: center;
+    padding-left: 0;
+  }
+
+  .perfil-texto-iuri {
+    padding: 0 20px;
+    text-align: center;
+    padding-left: 0;
+  }
+  
+  /* PLANOS */
+  .planos-container {
+    /* Garante que os planos se empilhem */
+    flex-direction: column;
+    align-items: center;
   }
 
   .plano {
-    width: 80%;
+    width: 90%;
+    max-width: 400px; /* Limite para não ficar muito largo em tablets */
+  }
+  
+  /* DEPOIMENTOS */
+  .depoimentos-grid {
+    /* O auto-fit já deve empilhar, mas o minmax garante o tamanho mínimo */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
   }
 
-  .overlay h1 {
-    font-size: 6vw;
+  .section-depoimentos h2 {
+    text-align: center;
   }
 }
 
-/* Notebooks */
-@media  (max-width: 1200px) {
+/* Celulares Pequenos (425px e abaixo) */
+@media (max-width: 425px) {
+  /* Estilo Geral de Fonte */
+  * {
+    font-size: 14px;
+  }
+
+  /* Menu */
+  .menu ul {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .menu ul li a {
+    font-size: 0.8rem;
+  }
+
+  /* OVERLAY */
+  .overlay h1 {
+    font-size: 10vw; 
+  }
+
+  .overlay p {
+    font-size: 16px;
+  }
+  
+  /* BIOGRAFIA */
+  .perfil-imagem-registro {
+    width: 90%;
+    max-width: 250px;
+  }
+  
+  .registro-cref {
+    font-size: 12px;
+  }
+
+  /* PLANOS - Garante que use a largura máxima */
   .plano {
-    width: 300px;
+    width: 95%;
   }
 
-  .overlay h1 {
-    font-size: 4vw;
+  /* Redes Sociais */
+  .redes-sociais a {
+    width: 30px;
+    height: 30px;
   }
 }
 
-/* Telas grandes */
+/* Ajuste para telas grandes (mantido) */
 @media (min-width: 1201px) {
   .menu {
     padding: 10px 10%;
@@ -551,5 +614,9 @@ footer {
 
   .overlay h1 {
     font-size: 3.5vw;
+  }
+  
+  .plano {
+    width: 300px; /* Retorna à largura original para ter 3 colunas */
   }
 }
